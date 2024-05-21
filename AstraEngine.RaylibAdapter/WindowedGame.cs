@@ -12,7 +12,7 @@ public sealed class WindowedGame : IGame
     /// <summary>Window Width</summary>
     public int Width { get; init; } = 640;
     /// <summary>Window Height</summary>
-    public int Height { get; init; } = 480;
+    public int Height { get; init; } = 680;
     /// <summary>Window Title</summary>
     public string Title { get; init; } = "Untitled Game";
     /// <summary>The Root element which has a <see cref="View"/>.</summary>
