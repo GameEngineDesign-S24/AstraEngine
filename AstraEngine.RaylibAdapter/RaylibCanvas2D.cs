@@ -21,6 +21,7 @@ public sealed class RaylibCanvas2D : ICanvas2D
 
     /// <inheritdoc/>
     public void Clear(Color backgroundColor) => Raylib.ClearBackground(backgroundColor.ToRayColor());
+
     /// <inheritdoc/>   
     public void DrawPoly(Position2D origin, int sides, float radius, float rotation, Color color)
     {
@@ -40,16 +41,19 @@ public sealed class RaylibCanvas2D : ICanvas2D
     {
         Raylib.DrawRectangleRec(new Rectangle((float)topLeft.X, (float)topLeft.Y, (float)width, (float)height), color.ToRayColor());
     }
+
     /// <inheritdoc/>
-    public void DrawText(Position2D location, string message, Color color)
+    public void DrawText(Position2D location, int fontSize, string message, Color color)
     {
-        Raylib.DrawText(message, (int)location.X, (int)location.Y, 12, color.ToRayColor());
+        Raylib.DrawText(message, (int)location.X, (int)location.Y, fontSize, color.ToRayColor());
     }
+
     /// <inheritdoc/>
     public void DrawPixel(Position2D location, Color color)
     {
         Raylib.DrawPixel((int)location.X, (int)location.Y, color.ToRayColor());
     }
+
     /// <inheritdoc/>
     public void DrawTriangle(Vector2 top, Vector2 bottomLeft, Vector2 bottomRight, Color color, Position2D position)
     {
@@ -58,6 +62,7 @@ public sealed class RaylibCanvas2D : ICanvas2D
         Vector2 newRight = new(bottomRight.X + (float)position.X, bottomRight.Y + (float)position.Y);
         Raylib.DrawTriangle(newTop, newLeft, newRight, color.ToRayColor());
     }
+
     /// <inheritdoc/>
     public void DrawCircle(Position2D position, float radius, Color color)
     {
@@ -77,13 +82,14 @@ public sealed class RaylibCanvas2D : ICanvas2D
             Raylib.DrawLineV(current, next, color.ToRayColor());
         }
     }
-    ///<inheritdoc/>
-    public void Drawtext(Position2D topleft, double fsize, Color color, string text)
-    {
 
-        // produces a lot of errors
-        Vector2 vector = new((float)topleft.X, (float)topleft.Y);
-        Raylib_cs.Raylib.DrawTextCodepoint(s_font, Enum.Parse(typeof(Alphabet), text).GetHashCode(), vector, (int)fsize, color.ToRayColor());
+    /// <inheritdoc/>
+    public void DrawSprite(ITexture2D texture, Position2D topLeft, Color tint)
+    {
+        if (texture is RaylibTexture2D raylibTexture)
+        {
+            Raylib.DrawTextureV(raylibTexture.Texture, new Vector2((float)topLeft.X, (float)topLeft.Y), tint.ToRayColor());
+        }
     }
 
     /// <inheritdoc/>
